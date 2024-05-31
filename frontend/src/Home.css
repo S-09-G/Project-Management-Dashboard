@@ -1,126 +1,91 @@
-/* Home.css */
+/* Custom CSS for the Home component */
 
-/* Variables for easy customization */
-:root {
-    --sidebar-bg-color: #f8f7ff;
-    --logo-max-height: 70px;
-    --menu-height: 100%;
-    --main-content-min-height: 100vh;
-    --title-font-weight: bold;
-    --title-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    --table-header-bg-color: #f8f9fa;
-    --table-header-text-color: #343a40;
-    --table-header-th-bg-color: blue;
-    --table-header-th-text-color: white;
-    --table-row-hover-bg-color: #e0e0e0;
-    --table-row-alternate-bg-color: #f0f0f0;
-    --table-cell-border-color: #ccc;
-  }
-  
-  /* Sidebar Styles */
-  .sidebar {
-    background-color: var(--sidebar-bg-color);
-    min-height: 100vh;
-    transition: all 0.3s ease;
-  }
-  
-  .sidebar:hover {
-    background-color: lighten(var(--sidebar-bg-color), 10%);
-  }
-  
-  /* Logo Styles */
-  .logo {
-    max-height: var(--logo-max-height);
-  }
-  
-  /* Menu Styles */
-  .menu {
-    height: var(--menu-height);
-  }
-  
-  /* Main Content Styles */
-  .main-content {
-    min-height: var(--main-content-min-height);
-  }
-  
-  /* Title Styles */
-  .title {
-    font-weight: var(--title-font-weight);
-    text-shadow: var(--title-text-shadow);
-    transition: color 0.3s ease;
-  }
-  
-  .title:hover {
-    color: darken(white, 10%);
-  }
-  
-  /* Table Header Styles */
-  .table-header {
-    background-color: var(--table-header-bg-color);
-    color: var(--table-header-text-color);
-  }
-  
-  .table-header th {
-    text-align: center;
-    color: var(--table-header-th-text-color);
-    background-color: var(--table-header-th-bg-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .table-header th:hover {
-    background-color: lighten(var(--table-header-th-bg-color), 10%);
-    color: darken(var(--table-header-th-text-color), 10%);
-  }
-  
-  /* Table Styles */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .table th,
-  .table td {
-    border: 1px solid var(--table-cell-border-color);
-    padding: 8px;
-    text-align: center;
-  }
-  
-  .table tbody tr:nth-child(odd) {
-    background-color: var(--table-row-alternate-bg-color);
-  }
-  
-  .table tbody tr:hover {
-    background-color: var(--table-row-hover-bg-color);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .sidebar {
-      min-height: auto;
-      height: auto;
-      padding: 10px;
-    }
-  
-    .logo {
-      max-height: 50px;
-    }
-  
-    .main-content {
-      padding: 10px;
-    }
-  
-    .table-header th {
-      font-size: 14px;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .title {
-      font-size: 1.5rem;
-    }
-  
-    .table-header th {
-      font-size: 12px;
-    }
-  }
-  
+body {
+  background-color: black;
+}
+
+.container-fluid {
+  padding: 0;
+}
+
+.sidebar {
+  background-color: white; /* Dark gray background for sidebar */
+  min-height: 100vh;
+}
+
+.sidebar .logo {
+  max-width: 100%;
+  height: auto;
+}
+
+.sidebar .menu {
+  width: 100%;
+}
+
+.sidebar .menu .btn {
+  background-color: white; /* Gray background for buttons */
+  color: white;
+}
+
+.sidebar .menu .btn:hover {
+  background-color: blue; /* Blue background for buttons on hover */
+  color: white;
+}
+
+.main-content {
+  background-color: black; /* Dark background for main content */
+  min-height: 100vh;
+}
+
+.title {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.table-responsive {
+  background-color: black; /* Dark background for table */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table-header {
+  background-color: black; /* Darker background for table header */
+  color: white;
+}
+
+.table tbody tr:hover {
+  background-color: black; /* Darker background for table rows on hover */
+}
+
+.table .form-control {
+  background-color: #495057;
+  color: white;
+  border: 1px solid #6c757d;
+}
+
+.table .form-control:focus {
+  background-color: #495057;
+  color: white;
+  border-color: blue; /* Blue border for inputs on focus */
+  box-shadow: none;
+}
+
+textarea {
+  resize: none; /* Disable manual resizing of textareas */
+}
+
+textarea:focus {
+  border-color: blue; /* Blue border for textarea on focus */
+  box-shadow: none;
+}
+
+.btn-primary {
+  background-color: #007bff; /* Bootstrap primary blue */
+  border-color: #007bff;
+}
+
+.btn-primary:hover {
+  background-color: blue; /* Blue background for primary button on hover */
+  border-color: blue;
+}
