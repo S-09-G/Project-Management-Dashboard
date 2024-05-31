@@ -1,0 +1,126 @@
+/* Home.css */
+
+/* Variables for easy customization */
+:root {
+    --sidebar-bg-color: #f8f7ff;
+    --logo-max-height: 70px;
+    --menu-height: 100%;
+    --main-content-min-height: 100vh;
+    --title-font-weight: bold;
+    --title-text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    --table-header-bg-color: #f8f9fa;
+    --table-header-text-color: #343a40;
+    --table-header-th-bg-color: blue;
+    --table-header-th-text-color: white;
+    --table-row-hover-bg-color: #e0e0e0;
+    --table-row-alternate-bg-color: #f0f0f0;
+    --table-cell-border-color: #ccc;
+  }
+  
+  /* Sidebar Styles */
+  .sidebar {
+    background-color: var(--sidebar-bg-color);
+    min-height: 100vh;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar:hover {
+    background-color: lighten(var(--sidebar-bg-color), 10%);
+  }
+  
+  /* Logo Styles */
+  .logo {
+    max-height: var(--logo-max-height);
+  }
+  
+  /* Menu Styles */
+  .menu {
+    height: var(--menu-height);
+  }
+  
+  /* Main Content Styles */
+  .main-content {
+    min-height: var(--main-content-min-height);
+  }
+  
+  /* Title Styles */
+  .title {
+    font-weight: var(--title-font-weight);
+    text-shadow: var(--title-text-shadow);
+    transition: color 0.3s ease;
+  }
+  
+  .title:hover {
+    color: darken(white, 10%);
+  }
+  
+  /* Table Header Styles */
+  .table-header {
+    background-color: var(--table-header-bg-color);
+    color: var(--table-header-text-color);
+  }
+  
+  .table-header th {
+    text-align: center;
+    color: var(--table-header-th-text-color);
+    background-color: var(--table-header-th-bg-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .table-header th:hover {
+    background-color: lighten(var(--table-header-th-bg-color), 10%);
+    color: darken(var(--table-header-th-text-color), 10%);
+  }
+  
+  /* Table Styles */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid var(--table-cell-border-color);
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .table tbody tr:nth-child(odd) {
+    background-color: var(--table-row-alternate-bg-color);
+  }
+  
+  .table tbody tr:hover {
+    background-color: var(--table-row-hover-bg-color);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sidebar {
+      min-height: auto;
+      height: auto;
+      padding: 10px;
+    }
+  
+    .logo {
+      max-height: 50px;
+    }
+  
+    .main-content {
+      padding: 10px;
+    }
+  
+    .table-header th {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .table-header th {
+      font-size: 12px;
+    }
+  }
+  
