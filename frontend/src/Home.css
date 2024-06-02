@@ -9,13 +9,18 @@ body {
 }
 
 .sidebar {
-  background-color: white; /* Dark gray background for sidebar */
+  background-color: black; /* Dark gray background for sidebar */
   min-height: 100vh;
+  transition: background-color 0.3s ease;
 }
 
-.sidebar .logo {
-  max-width: 100%;
-  height: auto;
+.sidebar:hover {
+  background-color: #2c2c2c; /* Slightly lighter gray on hover */
+}
+
+.sidebar .logo:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
 }
 
 .sidebar .menu {
@@ -25,67 +30,296 @@ body {
 .sidebar .menu .btn {
   background-color: white; /* Gray background for buttons */
   color: white;
+  width: 100%;
+  border: none;
+  text-align: center;
+  padding: 10px 0;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .sidebar .menu .btn:hover {
-  background-color: blue; /* Blue background for buttons on hover */
+  background-color: #007bff; /* Blue background for buttons on hover */
   color: white;
+  transform: translateY(-5px);
 }
 
 .main-content {
-  background-color: black; /* Dark background for main content */
+  background-color: black;
   min-height: 100vh;
+  padding: 20px;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle drop shadow */
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .title {
   color: white;
   text-align: center;
   margin-bottom: 20px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.title:hover {
+  color: #007bff;
+  text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 }
 
 .table-responsive {
-  background-color: black; /* Dark background for table */
+  background-color: black;
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
 }
 
-.table-header {
-  background-color: black; /* Darker background for table header */
-  color: white;
+.table-responsive:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.table tbody tr {
+  transition: background-color 1s ease, transform 0.3s ease;
 }
 
 .table tbody tr:hover {
-  background-color: black; /* Darker background for table rows on hover */
+  transform: scale(1.05); /* Increase size on hover */
+  background-color: #343a40; /* Darker background color on hover */
 }
 
 .table .form-control {
-  background-color: #495057;
-  color: white;
-  border: 1px solid #6c757d;
+  background-color: white;
+  color: black;
+  border: 2px solid black;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .table .form-control:focus {
   background-color: #495057;
   color: white;
-  border-color: blue; /* Blue border for inputs on focus */
-  box-shadow: none;
+  border-color: #007bff; /* Blue border for inputs on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 textarea {
-  resize: none; /* Disable manual resizing of textareas */
+  resize: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 textarea:focus {
-  border-color: blue; /* Blue border for textarea on focus */
-  box-shadow: none;
+  border-color: #007bff; /* Blue border for textarea on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
 .btn-primary {
   background-color: #007bff; /* Bootstrap primary blue */
   border-color: #007bff;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .btn-primary:hover {
   background-color: blue; /* Blue background for primary button on hover */
   border-color: blue;
+  transform: translateY(-3px);
+}
+
+.btn-danger {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-danger:hover {
+  background-color: #ff4d4d; /* Light red for delete button on hover */
+  transform: translateY(-3px);
+}
+
+.remarks-column {
+  width: 300px; /* Adjust the width as needed */
+}
+
+.text-align {
+  text-align: center;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Ensure the menu takes full height */
+}
+
+.menu li {
+  width: 100%;
+  text-align: center; /* Center align the text within the list items */
+}
+
+.menu button {
+  width: 80%; /* Adjust the width of the buttons as needed */
+  margin: 5px 0; /* Add some vertical spacing between buttons */
+  background-color: transparent;
+  border: 1px solid transparent;
+  transition: all 0.3s ease; /* Add smooth transition for hover effect */
+}
+
+.menu button:hover {
+  background-color: #f8f9fa; /* Change background color on hover */
+  color: #000; /* Change text color on hover */
+  border-color: #343a40; /* Change border color on hover */
+}
+
+/* Custom CSS for the Table component */
+
+.table tbody tr {
+  transition: transform 0.3s ease;
+}
+
+.table tbody tr:hover {
+  transform: scale(1.05); /* Increase size on hover */
+}
+
+.table tbody tr td {
+  text-align: center; /* Center align text horizontally */
+  vertical-align: middle; /* Align content vertically in the middle */
+  transition: background-color 0.3s ease;
+}
+
+.table tbody tr td:hover {
+  background-color: #f1f1f1; /* Light gray background on hover */
+}
+
+/* Optionally, adjust input and textarea styles */
+.table tbody tr td input[type="text"],
+.table tbody tr td input[type="date"],
+.table tbody tr td textarea {
+  text-align: center; /* Center align text within inputs and textareas */
+}
+
+/* Define the primary and secondary colors */
+:root {
+  --primary-color: #007bff; /* Bootstrap primary blue */
+  --secondary-color: #6c757d; /* Bootstrap secondary gray */
+  --background-color: #f8f9fa; /* Light gray background */
+}
+
+/* Apply the color scheme to the table */
+.table {
+  color: var(--secondary-color); /* Text color */
+  background-color: var(--background-color); /* Table background color */
+  border-collapse: separate;
+  border-spacing: 0 10px; /* Add spacing between rows */
+}
+
+.table th {
+  background-color: var(--primary-color); /* Header background color */
+  color: white; /* Header text color */
+  transition: background-color 0.3s ease;
+}
+
+.table th:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: white; /* Even row background color */
+}
+
+.table tbody tr:hover {
+  background-color: #e9ecef; /* Light gray background on hover */
+}
+
+.table input[type="text"],
+.table input[type="date"],
+.table textarea {
+  background-color: transparent; /* Transparent background for inputs and textareas */
+  color: inherit; /* Inherit text color */
+  border-color: var(--secondary-color); /* Border color */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.table input[type="text"]:focus,
+.table input[type="date"]:focus,
+.table textarea:focus {
+  border-color: var(--primary-color); /* Border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Box shadow on focus */
+  background-color: #4a4e54; /* Change background color on focus */
+  color: #ffffff; /* Change text color on focus */
+}
+
+.table button {
+  background-color: var(--primary-color); /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove button border */
+  padding: 5px 10px; /* Adjust button padding */
+  cursor: pointer; /* Add cursor pointer */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.table button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: translateY(-3px);
+}
+
+.table tbody tr:focus-within {
+  background-color: #343a40; /* Dark gray background on focus */
+  color: white; /* White text color on focus */
+}
+
+/* Additional Animations */
+
+/* Bounce effect for buttons */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-15px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.btn-primary:active,
+.btn-danger:active {
+  animation: bounce 0.5s;
+}
+
+/* Pulse effect for titles */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.title:hover {
+  animation: pulse 1s infinite;
+}
+
+/* Hover effect for form controls */
+.table .form-control:hover {
+  background-color: #3a3f44; /* Darker background color on hover */
+  color: white; /* White text color on hover */
+}
+
+/* Transition effect for table rows */
+.table tbody tr {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.table tbody tr:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }

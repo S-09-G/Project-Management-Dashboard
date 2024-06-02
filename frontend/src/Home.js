@@ -12,33 +12,34 @@ function Home() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchData();
+    const abortController = new AbortController();
+    fetchData(abortController);
+
+    return () => {
+      abortController.abort();
+    };
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (abortController) => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:8082/table_data');
+      const response = await axios.get('http://localhost:8082/table_data', { signal: abortController.signal });
       setData(response.data);
       setError(null);
     } catch (error) {
-      console.error('Error fetching data:', error);
-      setError('Failed to fetch data.');
+      if (axios.isCancel(error)) {
+        console.log('Request canceled', error.message);
+      } else {
+        console.error('Error fetching data:', error);
+        setError('Failed to fetch data.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleDashboardClick = () => {
-    navigate('/home');
-  };
-
-  const handleSettingsClick = () => {
-    navigate('/settings');
-  };
-
-  const handleAnalyticsClick = () => {
-    navigate('/analysis');
+  const handleNavigationClick = (path) => {
+    navigate(path);
   };
 
   const handleInputChange = (e, index, key) => {
@@ -56,7 +57,7 @@ function Home() {
 
   const autoResizeTextarea = (textarea) => {
     textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
+    textarea.style.height = `${textarea.scrollHeight}px`;
   };
 
   const addRow = () => {
@@ -114,20 +115,20 @@ function Home() {
     <div className="container-fluid vh-100 bg-black">
       <div className="row">
         <div className="col-md-2 text-light py-4 d-flex flex-column justify-content-start sidebar">
-          <img src={require('./images/iDEX-Final-Logo-03 (1).jpg')} alt="Logo" className="img-fluid mb-4 logo" />
+        <img src={require('./images/iDEX-Final-Logo-03 (1).jpg')} alt="Logo" className="logo-effect" />
           <ul className="list-unstyled d-flex flex-column align-items-center justify-content-center menu">
             <li className="mb-2 w-100">
-              <button className="btn btn-light text-dark px-4 py-2 rounded-3 border border-dark w-100" onClick={handleDashboardClick}>
+              <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/home')}>
                 Dashboard
               </button>
             </li>
             <li className="mb-2 w-100">
-              <button className="btn btn-light text-dark px-4 py-2 rounded-3 border border-dark w-100" onClick={handleAnalyticsClick}>
+              <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/analysis')}>
                 Analytics
               </button>
             </li>
             <li className="mb-2 w-100">
-              <button className="btn btn-light text-dark px-4 py-2 rounded-3 border border-dark w-100" onClick={handleSettingsClick}>
+              <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/settings')}>
                 Settings
               </button>
             </li>
@@ -135,7 +136,7 @@ function Home() {
         </div>
         <div className="col-md-10 bg-black">
           <div className="bg-black text-light py-4 main-content">
-            <h1 className="display-3 bg-dark text-light title" style={{ fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+            <h1 className="display-3 bg-black text-light title" style={{ fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
               DASHBOARD
             </h1>
             {loading && <p>Loading...</p>}
@@ -146,12 +147,14 @@ function Home() {
               removeRow={removeRow}
               autoResizeTextarea={autoResizeTextarea}
             />
-              <button onClick={addRow} className="btn btn-primary me-1 ms-4">
+            <div className="d-flex justify-content-start ms-4 mt-3">
+              <button onClick={addRow} className="btn btn-primary me-2">
                 Add Row
               </button>
               <button onClick={handleSave} className="btn btn-primary">
                 Save
               </button>
+            </div>
           </div>
         </div>
       </div>
