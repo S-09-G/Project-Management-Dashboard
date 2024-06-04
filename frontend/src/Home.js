@@ -112,53 +112,53 @@ function Home() {
   };
 
   return (
-    <div className="container-fluid vh-100 bg-black">
-      <div className="row">
-        <div className="col-md-2 text-light py-4 d-flex flex-column justify-content-start sidebar">
-        <img src={require('./images/iDEX-Final-Logo-03 (1).jpg')} alt="Logo" className="logo-effect" />
-          <ul className="list-unstyled d-flex flex-column align-items-center justify-content-center menu">
-            <li className="mb-2 w-100">
-              <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/home')}>
-                Dashboard
-              </button>
-            </li>
-            <li className="mb-2 w-100">
-              <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/analysis')}>
-                Analytics
-              </button>
-            </li>
-            <li className="mb-2 w-100">
-              <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/settings')}>
-                Settings
-              </button>
-            </li>
-          </ul>
-        </div>
-        <div className="col-md-10 bg-black">
-          <div className="bg-black text-light py-4 main-content">
-            <h1 className="display-3 bg-black text-light title" style={{ fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-              DASHBOARD
-            </h1>
-            {loading && <p>Loading...</p>}
-            {error && <p className="text-danger">{error}</p>}
-            <Table
-              data={data}
-              handleInputChange={handleInputChange}
-              removeRow={removeRow}
-              autoResizeTextarea={autoResizeTextarea}
-            />
-            <div className="d-flex justify-content-start ms-4 mt-3">
-              <button onClick={addRow} className="btn btn-primary me-2">
-                Add Row
-              </button>
-              <button onClick={handleSave} className="btn btn-primary">
-                Save
-              </button>
+      <div className="container-fluid vh-100 bg-black">
+        <div className="row">
+          <div className="col-md-2 text-light py-4 d-flex flex-column justify-content-start sidebar">
+            <img src={require('./images/iDEX-Final-Logo-03 (1).jpg')} alt="Logo" className="logo-effect" />
+            <ul className="list-unstyled d-flex flex-column align-items-center justify-content-center menu">
+              <li className="mb-2 w-100">
+                <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/home')}>
+                  Dashboard
+                </button>
+              </li>
+              <li className="mb-2 w-100">
+                <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/analysis')}>
+                  Analytics
+                </button>
+              </li>
+              <li className="mb-2 w-100">
+                <button className="btn btn-light text-dark px-4 py-2 rounded-3 w-100" onClick={() => handleNavigationClick('/settings')}>
+                  Settings
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div className="col-md-10 bg-black">
+            <div className="bg-black text-light py-4 main-content">
+              <h1 className="display-3 bg-black text-light title" style={{ fontWeight: 'bold', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+                DASHBOARD
+              </h1>
+              {loading && <p>Loading...</p>}
+              {error && <p className="text-danger">{error}</p>}
+              <Table
+                  data={data}
+                  handleInputChange={handleInputChange}
+                  removeRow={removeRow}
+                  autoResizeTextarea={autoResizeTextarea}
+              />
+              <div className="d-flex justify-content-start ms-4 mt-3">
+                <button onClick={addRow} className="btn btn-primary me-2">
+                  Add Row
+                </button>
+                <button onClick={handleSave} className="btn btn-primary">
+                  Save
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 
