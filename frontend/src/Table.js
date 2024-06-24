@@ -1,67 +1,100 @@
 import React from 'react';
+import * as XLSX from 'xlsx';
 
-const Table = ({ data, handleInputChange, removeRow, autoResizeTextarea }) => {
+function Table({ data, handleInputChange, removeRow, autoResizeTextarea, handleCheckboxChange }) {
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Table Data');
+    XLSX.writeFile(workbook, 'table_data.xlsx');
+  };
+
   return (
     <div className="table-responsive">
-      <table className="table table-striped table-bordered table-hover table-sm" style={{ tableLayout: 'fixed' }}>
-        <colgroup>
-          <col style={{ width: '5%' }} />
-          <col style={{ width: '15%' }} />
-          <col style={{ width: '15%' }} />
-          <col style={{ width: '15%' }} />
-          <col style={{ width: '15%' }} />
-          <col style={{ width: '15%' }} />
-          <col style={{ width: '9%' }} />
-          <col className="remarks-column" />
-          <col style={{ width: '10%' }} />
-        </colgroup>
-        <thead className="table-header">
+      <table id="table" className="table table-dark table-striped">
+        <thead>
           <tr>
-            <th className="text-align">S.No</th>
-            <th className="text-align">Name of the Company</th>
-            <th className="text-align">Contract Owner</th>
-            <th className="text-align">Milestone</th>
-            <th className="text-align">Start Date</th>
-            <th className="text-align">Due</th>
-            <th className="text-align">Select</th>
-            <th className="remarks-column text-align">Remarks</th>
-            <th className="text-align">Actions</th>
+            <th>S.No</th>
+            <th>IDEX Innovator</th>
+            <th>DISC Challenge</th>
+            <th>Contract Owner</th>
+            <th>Current Milestone</th>
+            <th>Last Date of MS Closure</th>
+            <th className="remarks-column">Remarks/Action</th>
+            <th>Reviewed</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((item, index) => (
-            <tr key={index} style={{ backgroundColor: index % 2 === 0 ? '#f8f9fa' : '#fff' }}>
-              <td className="text-align">{index + 1}</td>
+          {data.map((row, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
               <td>
-                <input type="text" className="form-control" value={item.companyName} onChange={(e) => handleInputChange(e, index, 'companyName')} />
-              </td>
-              <td>
-                <input type="text" className="form-control" value={item.contractOwner} onChange={(e) => handleInputChange(e, index, 'contractOwner')} />
-              </td>
-              <td>
-                <input type="text" className="form-control" value={item.milestone} onChange={(e) => handleInputChange(e, index, 'milestone')} />
-              </td>
-              <td>
-                <input type="date" className="form-control" value={item.startdate} onChange={(e) => handleInputChange(e, index, 'startdate')} />
+                <textarea
+                  value={row.innovator}
+                  onChange={(e) => handleInputChange(e, index, 'innovator')}
+                  onInput={(e) => autoResizeTextarea(e.target)}
+                  placeholder="Innovator"
+                />
               </td>
               <td>
-                <input type="date" className="form-control" value={item.due} onChange={(e) => handleInputChange(e, index, 'due')} />
-              </td>
-              <td className="text-align">
-                <input type="checkbox" className="form-check-input" checked={item.selected} onChange={(e) => handleInputChange(e, index, 'selected')} />
+                <textarea
+                  value={row.discChallenge}
+                  onChange={(e) => handleInputChange(e, index, 'discChallenge')}
+                  onInput={(e) => autoResizeTextarea(e.target)}
+                  placeholder="DISC Challenge"
+                />
               </td>
               <td>
-                <textarea className="form-control remarks-textarea" value={item.remarks} onChange={(e) => handleInputChange(e, index, 'remarks')} onFocus={(e) => autoResizeTextarea(e.target)} />
+                <textarea
+                  value={row.contractOwner}
+                  onChange={(e) => handleInputChange(e, index, 'contractOwner')}
+                  onInput={(e) => autoResizeTextarea(e.target)}
+                  placeholder="Contract Owner"
+                />
               </td>
-              <td className="text-align">
-                <button className="btn btn-danger btn-sm" onClick={() => removeRow(index, item.id)}>Delete</button>
+              <td>
+                <textarea
+                  value={row.currentMilestone}
+                  onChange={(e) => handleInputChange(e, index, 'currentMilestone')}
+                  onInput={(e) => autoResizeTextarea(e.target)}
+                  placeholder="Current Milestone"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  value={row.lastMsClosureDate}
+                  onChange={(e) => handleInputChange(e, index, 'lastMsClosureDate')}
+                />
+              </td>
+              <td className="remarks-column">
+                <textarea
+                  value={row.remarks}
+                  onChange={(e) => handleInputChange(e, index, 'remarks')}
+                  onInput={(e) => autoResizeTextarea(e.target)}
+                  placeholder="Remarks"
+                />
+              </td>
+              <td>
+                <input
+                  type="checkbox"
+                  checked={row.reviewed}
+                  onChange={(e) => handleCheckboxChange(e, index)}
+                />
+              </td>
+              <td>
+                <button className="btn btn-danger" onClick={() => removeRow(index, row.id)}>Remove</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <div className="d-flex justify-content-between mt-3">
+        <button className="btn btn-primary" onClick={exportToExcel}>Export to Excel</button>
+      </div>
     </div>
   );
-};
+}
 
 export default Table;

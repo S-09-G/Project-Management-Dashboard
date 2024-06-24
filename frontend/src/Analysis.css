@@ -1,0 +1,93 @@
+/* General styles */
+body {
+  background-color: #000 !important;
+  color: #fff; /* Ensure the text color is white for readability */
+  font-family: Arial, sans-serif; /* Optional: set a default font for better aesthetics */
+}
+
+/* Container */
+.analysis-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 20px;
+}
+
+/* Common styles for analysis boxes */
+.analysis-box {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #fff;
+  color: #000;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Analysis headers */
+.analysis-header {
+  font-size: 2em;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #000;
+}
+
+.analysis-subheader {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Stats */
+.analysis-stat {
+  margin-bottom: 10px;
+}
+
+.analysis-stat-label {
+  font-weight: bold;
+  color: #000;
+}
+
+.analysis-stat-value {
+  margin-left: 10px;
+  color: #0000ff;
+}
+
+.analysis-stat-percentage {
+  margin-left: 5px;
+  color: #0000ff;
+}
+
+/* Dropdown */
+.dropdown-container {
+  margin: 20px 0;
+}
+
+.dropdown-container select {
+  padding: 10px;
+  font-size: 1em;
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #555;
+  border-radius: 5px;
+  appearance: none; /* Remove default dropdown arrow */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-caret-down-fill' viewBox='0 0 16 16'> <path d='M7.247 11.14l-4.796-5.481c-.566-.647-.106-1.659.755-1.659h9.588c.86 0 1.32 1.012.755 1.659l-4.796 5.48a1 1 0 0 1-1.512 0z'/> </svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+.dropdown-container select:focus {
+  outline: none;
+  border-color: #00aced;
+}
