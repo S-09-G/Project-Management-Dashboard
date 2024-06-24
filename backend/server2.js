@@ -3,12 +3,14 @@ const mysql = require("mysql");
 const cors = require("cors");
 const dotenv = require("dotenv");
 
+dotenv.config();
+
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 const db = mysql.createPool({
-  connectionLimit: 10, 
+  connectionLimit: 10,
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
   password: process.env.DB_PASSWORD || "",
@@ -18,13 +20,14 @@ const db = mysql.createPool({
 const createTableQuery = `
   CREATE TABLE IF NOT EXISTS table_data (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    companyName VARCHAR(255) NOT NULL,
+    innovator VARCHAR(255) NOT NULL,
+    discChallenge VARCHAR(255) NOT NULL,
     contractOwner VARCHAR(255) NOT NULL,
-    milestone VARCHAR(255) NOT NULL,
-    startdate DATE NOT NULL,
-    due DATE NOT NULL,
+    currentMilestone VARCHAR(255) NOT NULL,
+    lastMsClosureDate DATE NOT NULL,
     remarks VARCHAR(255),
-    selected BOOLEAN
+    reviewed BOOLEAN DEFAULT FALSE,
+    UNIQUE (innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate)
   )
 `;
 
@@ -56,45 +59,61 @@ app.get('/table_data', (req, res) => {
       console.error('Error fetching data: ' + err.message);
       return res.status(500).json({ error: 'Error fetching data' });
     }
-    // Ensure dates are correctly formatted as strings
     const formattedResults = results.map(row => ({
       ...row,
-      startdate: row.startdate.toISOString().split('T')[0],
-      due: row.due.toISOString().split('T')[0]
+      lastMsClosureDate: row.lastMsClosureDate.toISOString().slice(0, 10)
     }));
     res.json(formattedResults);
   });
 });
 
 app.post('/table_data', (req, res) => {
-  const { companyName, contractOwner, milestone, startdate, due, remarks, selected } = req.body;
+  const { innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate, remarks, reviewed } = req.body;
 
-  if (!companyName || !contractOwner || !milestone || !startdate || !due) {
+  if (!innovator || !discChallenge || !contractOwner || !currentMilestone || !lastMsClosureDate) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
-  const sql = `INSERT INTO table_data (companyName, contractOwner, milestone, startdate, due, remarks, selected) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+  console.log('Received request body:', req.body);
 
-  db.query(sql, [companyName, contractOwner, milestone, startdate, due, remarks, selected], (err, result) => {
+  // Check if a similar record already exists
+  const checkSql = `SELECT * FROM table_data WHERE innovator = ? AND discChallenge = ? AND contractOwner = ? AND currentMilestone = ? AND lastMsClosureDate = ?`;
+  db.query(checkSql, [innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate], (err, results) => {
     if (err) {
-      console.error('Error inserting row: ' + err.message);
-      return res.status(500).json({ error: 'Error inserting row' });
+      console.error('Error checking existing record: ', err);
+      return res.status(500).json({ error: 'Error checking existing record' });
     }
-    res.json({ message: 'Row inserted successfully', id: result.insertId });
+
+    if (results.length > 0) {
+      return res.status(400).json({ error: 'A similar record already exists' });
+    }
+
+    // Insert the new record if no similar record exists
+    const insertSql = `INSERT INTO table_data (innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate, remarks, reviewed) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    db.query(insertSql, [innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate, remarks, reviewed || false], (err, result) => {
+      if (err) {
+        console.error('Error inserting row: ', err);
+        return res.status(500).json({ error: 'Error inserting row' });
+      }
+      console.log('Row inserted successfully, ID:', result.insertId);
+      res.json({ message: 'Row inserted successfully', id: result.insertId });
+    });
   });
 });
 
 app.put('/table_data/:id', (req, res) => {
   const { id } = req.params;
-  const { companyName, contractOwner, milestone, startdate, due, remarks, selected } = req.body;
+  const { innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate, remarks, reviewed } = req.body;
 
-  const sql = `UPDATE table_data SET companyName = ?, contractOwner = ?, milestone = ?, startdate = ?, due = ?, remarks = ?, selected = ? WHERE id = ?`;
+  console.log('Received request body:', req.body);
 
-  db.query(sql, [companyName, contractOwner, milestone, startdate, due, remarks, selected, id], (err, result) => {
+  const sql = `UPDATE table_data SET innovator = ?, discChallenge = ?, contractOwner = ?, currentMilestone = ?, lastMsClosureDate = ?, remarks = ?, reviewed = ? WHERE id = ?`;
+  db.query(sql, [innovator, discChallenge, contractOwner, currentMilestone, lastMsClosureDate, remarks, reviewed || false, id], (err, result) => {
     if (err) {
-      console.error('Error updating row: ' + err.message);
+      console.error('Error updating row: ', err);
       return res.status(500).json({ error: 'Error updating row' });
     }
+    console.log('Row updated successfully');
     res.json({ message: 'Row updated successfully' });
   });
 });
@@ -103,12 +122,12 @@ app.delete('/table_data/:id', (req, res) => {
   const { id } = req.params;
 
   const sql = `DELETE FROM table_data WHERE id = ?`;
-
   db.query(sql, [id], (err, result) => {
     if (err) {
-      console.error('Error deleting row: ' + err.message);
+      console.error('Error deleting row: ', err);
       return res.status(500).json({ error: 'Error deleting row' });
     }
+    console.log('Row deleted successfully');
     res.json({ message: 'Row deleted successfully' });
   });
 });
