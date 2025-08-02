@@ -1,9 +1,11 @@
-📊 Project Management Dashboard
+Project Management Dashboard
 
 A full-stack web application that enables efficient tracking, management, and analysis of multiple projects through a centralized dashboard.
 
 Built with React.js, Bootstrap, Node.js, Express.js, and MySQL, this dashboard simplifies project handling, automates data operations, and delivers real-time insights.
-🚀 Features
+
+
+Features
 
     ✅ Centralized Data Management
     Store and manage all project details in a structured MySQL database.
