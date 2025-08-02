@@ -24,20 +24,20 @@ Built with React.js, Bootstrap, Node.js, Express.js, and MySQL, this dashboard s
 
 🌐 Frontend
 
-    ⚛️ React.js
+    React.js
 
-    🎨 Bootstrap
+    Bootstrap
 
-    🔗 Axios
+    Axios
 
 🖥️ Backend
 
-    🟢 Node.js
+    Node.js
 
-    🚂 Express.js
+    Express.js
 
-    📡 RESTful APIs
+    RESTful APIs
 
 🗄️ Database
 
-    🐬 MySQL
+    MySQL
